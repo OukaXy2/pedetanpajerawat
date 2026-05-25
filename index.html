@@ -307,6 +307,64 @@
       color: #64748b;
     }
 
+    /* ===== CHART STYLES ===== */
+    .chart-container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
+    }
+    .chart-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .chart-wrapper {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 6px;
+      height: 180px;
+      padding: 8px 4px;
+      background: #f8fafc;
+      border-radius: 12px;
+    }
+    .chart-bar-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .chart-bar {
+      width: 90%;
+      background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+      border-radius: 6px;
+      transition: height 0.3s;
+      min-height: 4px;
+    }
+    .chart-bar.selected {
+      background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .chart-bar.legend {
+      font-size: 0.625rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .chart-bar.active {
+      background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .chart-date {
+      font-size: 0.625rem;
+      color: #64748b;
+      text-align: center;
+    }
+    
     /* ===== TRACKER EMOJI SCALE ===== */
     .emoji-scale {
       display: flex;
@@ -530,6 +588,14 @@
         </div>
 
         <button class="btn btn-primary btn-block" id="btn-save-log">Simpan Catatan</button>
+      </div>
+
+      <!-- Progress Chart -->
+      <div class="chart-container" id="progress-chart">
+        <div class="chart-title">Perkembangan Kulit 30 Hari Terakhir</div>
+        <div class="chart-wrapper" id="chart-bars">
+          <!-- Chart bars will be populated by JS -->
+        </div>
       </div>
 
       <!-- Log history -->
@@ -789,14 +855,18 @@
     function renderLogs() {
       const list = document.getElementById('log-list');
       const empty = document.getElementById('log-empty');
+      const chart = document.getElementById('progress-chart');
+      const chartBars = document.getElementById('chart-bars');
 
       if (logs.length === 0) {
         list.innerHTML = '';
         empty.classList.remove('hidden');
+        chart.classList.add('hidden');
         return;
       }
 
       empty.classList.add('hidden');
+      chart.classList.remove('hidden');
 
       const EMOJIS = ['', '😣', '😕', '😐', '🙂', '😄'];
       const recent = logs.slice(-30).reverse();
@@ -815,6 +885,23 @@
           </div>
         `;
         cardBody.appendChild(entry);
+      });
+
+      // Render chart bars
+      chartBars.innerHTML = '';
+      const barData = ['Buruk', 'Kurang', 'Biasa', 'Baik', 'Sempurna'];
+      
+      recent.forEach(log => {
+        const mood = log.mood;
+        const barContainer = document.createElement('div');
+        barContainer.className = 'chart-bar-container';
+        
+        barContainer.innerHTML = `
+          <div class="chart-date">${log.date.split(' ')[0]}</div>
+          <div class="chart-bar ${mood}" title="${EMOJIS[mood]} ${barData[mood - 1]}"></div>
+          <div class="chart-bar legend">${barData[mood - 1]}</div>
+        `;
+        chartBars.appendChild(barContainer);
       });
     }
 
