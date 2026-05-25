@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pede Tanpa Jerawat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100dvh;
+      background: #f8fafc;
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    h2 { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; }
+    h3 { font-size: 0.938rem; font-weight: 600; }
+    p  { font-size: 0.875rem; line-height: 1.5; }
+    .text-secondary { color: #64748b; }
+    .text-small { font-size: 0.75rem; }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      padding: 20px 20px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      background: #f8fafc;
+      z-index: 10;
+    }
+    .app-header .logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: #fff; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ===== PAGE / SECTION ===== */
+    .page {
+      display: none;
+      padding: 0 20px 24px;
+      animation: fadeSlideIn 0.3s ease;
+    }
+    .page.active { display: block; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
+    }
+    .card-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px;
+    }
+    .summary-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: #fff;
+      margin-bottom: 12px;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 6px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: #38bdf8;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #0ea5e9; }
+    .btn-outline {
+      background: transparent;
+      color: #38bdf8;
+      border: 1.5px solid #38bdf8;
+    }
+    .btn-outline:hover { background: #e0f2fe; }
+    .btn-ghost {
+      background: transparent;
+      color: #64748b;
+      padding: 8px 12px;
+    }
+    .btn-ghost:hover { background: #f1f5f9; }
+    .btn-block { width: 100%; }
+    .btn-sm { padding: 8px 16px; font-size: 0.813rem; }
+    .btn-danger {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+    .btn-danger:hover { background: #fee2e2; }
+
+    /* ===== FORM ELEMENTS ===== */
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 0.813rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    /* Radio pill group */
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-pill {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 0.813rem;
+      font-weight: 500;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fff;
+      user-select: none;
+    }
+    .radio-pill:hover { border-color: #38bdf8; color: #38bdf8; }
+    .radio-group input[type="radio"]:checked + .radio-pill {
+      background: #38bdf8;
+      color: #fff;
+      border-color: #38bdf8;
+    }
+
+    /* Checkbox pill group */
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .checkbox-group input[type="checkbox"] { display: none; }
+    .checkbox-pill {
+      padding: 8px 18px;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 0.813rem;
+      font-weight: 500;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fff;
+      user-select: none;
+    }
+    .checkbox-pill:hover { border-color: #38bdf8; color: #38bdf8; }
+    .checkbox-group input[type="checkbox"]:checked + .checkbox-pill {
+      background: #38bdf8;
+      color: #fff;
+      border-color: #38bdf8;
+    }
+
+    /* Textarea */
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: #0f172a;
+      resize: vertical;
+      min-height: 80px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: #38bdf8; }
+    textarea::placeholder { color: #94a3b8; }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      padding: 6px 0 env(safe-area-inset-bottom, 6px);
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 16px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.625rem;
+      font-weight: 500;
+      color: #64748b;
+      transition: color 0.2s;
+    }
+    .nav-item.active { color: #38bdf8; }
+    .nav-item svg {
+      width: 24px; height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .nav-item.active svg { stroke: #38bdf8; }
+
+    /* ===== ROUTINE TABS ===== */
+    .tabs {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.813rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: #fff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* ===== ROUTINE STEP CARDS ===== */
+    .step-card {
+      display: flex;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border-left: 3px solid #38bdf8;
+    }
+    .step-number {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #38bdf8;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.813rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-info { flex: 1; }
+    .step-category {
+      font-size: 0.813rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+    .step-tip {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    /* ===== TRACKER EMOJI SCALE ===== */
+    .emoji-scale {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .emoji-btn {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 4px;
+      padding: 10px 4px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .emoji-btn .emoji { font-size: 1.5rem; line-height: 1; }
+    .emoji-btn .emoji-label {
+      font-size: 0.625rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .emoji-btn:hover { border-color: #38bdf8; }
+    .emoji-btn.selected {
+      border-color: #38bdf8;
+      background: #e0f2fe;
+    }
+    .emoji-btn input { display: none; }
+
+    /* ===== LOG LIST ===== */
+    .log-entry {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .log-entry:last-child { border-bottom: none; }
+    .log-emoji { font-size: 1.5rem; flex-shrink: 0; line-height: 1.2; }
+    .log-body { flex: 1; min-width: 0; }
+    .log-date { font-size: 0.75rem; color: #64748b; font-weight: 500; margin-bottom: 2px; }
+    .log-notes { font-size: 0.813rem; color: #0f172a; word-wrap: break-word; }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+      text-align: center;
+    }
+    .empty-state-icon {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: #e0f2fe;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+      font-size: 2rem;
+    }
+    .empty-state h3 { margin-bottom: 6px; }
+    .empty-state p { color: #64748b; max-width: 260px; }
+
+    /* ===== BADGE ===== */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.688rem;
+      font-weight: 600;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    /* ===== REVEAL UTILITIES ===== */
+    .hidden { display: none !important; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .mb-16 { margin-bottom: 16px; }
+    .gap-8 { gap: 8px; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+  </style>
+</head>
+<body>
+  <div class="app-container" id="app">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="logo-icon">PJ</div>
+      <h1>Pede Tanpa Jerawat</h1>
+    </header>
+
+    <!-- ===== PAGE 1: SKIN PROFILE ===== -->
+    <section class="page active" id="page-profile">
+
+      <!-- Profile form (shown when no profile exists) -->
+      <div id="profile-form-view">
+        <div class="card">
+          <h2 style="margin-bottom:4px;">Kenali Kulitmu ✨</h2>
+          <p class="text-secondary" style="margin-bottom:6px;">Isi profil kulitmu untuk rekomendasi rutinitas yang tepat.</p>
+        </div>
+
+        <div class="card">
+          <div class="form-group">
+            <span class="form-label">Tipe Kulit</span>
+            <div class="radio-group" id="skin-type-group">
+              <input type="radio" name="skinType" id="type-berminyak" value="Berminyak">
+              <label class="radio-pill" for="type-berminyak">Berminyak</label>
+              <input type="radio" name="skinType" id="type-kering" value="Kering">
+              <label class="radio-pill" for="type-kering">Kering</label>
+              <input type="radio" name="skinType" id="type-kombinasi" value="Kombinasi">
+              <label class="radio-pill" for="type-kombinasi">Kombinasi</label>
+              <input type="radio" name="skinType" id="type-sensitif" value="Sensitif">
+              <label class="radio-pill" for="type-sensitif">Sensitif</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <span class="form-label">Masalah Kulit <span class="text-secondary text-small">(bisa pilih lebih dari satu)</span></span>
+            <div class="checkbox-group" id="concerns-group">
+              <input type="checkbox" name="concern" id="c-jerawat" value="Jerawat Aktif">
+              <label class="checkbox-pill" for="c-jerawat">Jerawat Aktif</label>
+              <input type="checkbox" name="concern" id="c-bekas" value="Bekas Jerawat">
+              <label class="checkbox-pill" for="c-bekas">Bekas Jerawat</label>
+              <input type="checkbox" name="concern" id="c-komedo" value="Komedo">
+              <label class="checkbox-pill" for="c-komedo">Komedo</label>
+              <input type="checkbox" name="concern" id="c-kusam" value="Kulit Kusam">
+              <label class="checkbox-pill" for="c-kusam">Kulit Kusam</label>
+              <input type="checkbox" name="concern" id="c-pori" value="Pori-pori Besar">
+              <label class="checkbox-pill" for="c-pori">Pori-pori Besar</label>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="btn-save-profile">Simpan Profil</button>
+        </div>
+      </div>
+
+      <!-- Profile summary (shown when profile exists) -->
+      <div id="profile-summary-view" class="hidden">
+        <div class="card">
+          <div class="card-header">
+            <h2>Profil Kulitmu</h2>
+            <button class="btn btn-ghost btn-sm" id="btn-edit-profile">Edit</button>
+          </div>
+          <div class="summary-avatar">🧴</div>
+          <p style="font-weight:600; font-size:1rem; margin-bottom:4px;" id="summary-skin-type"></p>
+          <p class="text-secondary text-small" style="margin-bottom:12px;" id="summary-concerns"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE 2: ROUTINE BUILDER ===== -->
+    <section class="page" id="page-routine">
+      <!-- No profile state -->
+      <div id="routine-no-profile" class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <h3>Belum Ada Profil Kulit</h3>
+        <p>Isi profil kulitmu dulu ya supaya kami bisa rekomendasikan rutinitas yang tepat!</p>
+        <button class="btn btn-primary mt-16" id="btn-go-profile-from-routine">Buat Profil</button>
+      </div>
+
+      <!-- Routine content -->
+      <div id="routine-content" class="hidden">
+        <div class="card" style="padding:16px 20px; display:flex; align-items:center; gap:12px;">
+          <span style="font-size:1.5rem;">🌞</span>
+          <div>
+            <p style="font-weight:600; font-size:0.875rem;" id="routine-greeting">Good Morning!</p>
+            <p class="text-secondary text-small" id="routine-subtext">Ikuti langkah-langkah ini ya!</p>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="morning">Pagi</button>
+          <button class="tab-btn" data-tab="night">Malam</button>
+        </div>
+
+        <div id="morning-steps"></div>
+        <div id="night-steps"></div>
+      </div>
+    </section>
+
+    <!-- ===== PAGE 3: TRACKER ===== -->
+    <section class="page" id="page-tracker">
+      <div class="card">
+        <h2 style="margin-bottom:4px;">Catat Kondisi Kulit Hari Ini</h2>
+        <p class="text-secondary text-small" style="margin-bottom:16px;">Pantau perubahan kulitmu setiap hari.</p>
+
+        <div class="form-group">
+          <span class="form-label">Gimana kondisi kulitmu hari ini?</span>
+          <div class="emoji-scale" id="emoji-scale">
+            <button class="emoji-btn" data-value="1">
+              <span class="emoji">😣</span>
+              <span class="emoji-label">Buruk</span>
+            </button>
+            <button class="emoji-btn" data-value="2">
+              <span class="emoji">😕</span>
+              <span class="emoji-label">Kurang</span>
+            </button>
+            <button class="emoji-btn" data-value="3">
+              <span class="emoji">😐</span>
+              <span class="emoji-label">Biasa</span>
+            </button>
+            <button class="emoji-btn" data-value="4">
+              <span class="emoji">🙂</span>
+              <span class="emoji-label">Baik</span>
+            </button>
+            <button class="emoji-btn" data-value="5">
+              <span class="emoji">😄</span>
+              <span class="emoji-label">Sempurna</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="form-label">Catatan <span class="text-secondary text-small">(opsional)</span></span>
+          <textarea id="log-notes" placeholder="Produk baru? Reaksi kulit? Cuaca?" rows="3"></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="btn-save-log">Simpan Catatan</button>
+      </div>
+
+      <!-- Log history -->
+      <div id="log-list">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- Empty log state -->
+      <div id="log-empty" class="empty-state hidden">
+        <div class="empty-state-icon">📝</div>
+        <h3>Belum Ada Catatan</h3>
+        <p>Mulai catat kondisi kulitmu setiap hari untuk melihat perkembangannya!</p>
+      </div>
+    </section>
+
+    <!-- ===== BOTTOM NAVIGATION ===== -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-page="profile">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profil Kulit</span>
+      </button>
+      <button class="nav-item" data-page="routine">
+        <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <span>Rutin Saya</span>
+      </button>
+      <button class="nav-item" data-page="tracker">
+        <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        <span>Tracker</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    // ============================================================
+    //  DATA & ROUTINE LOGIC
+    // ============================================================
+
+    const SKIN_TYPES = ['Berminyak', 'Kering', 'Kombinasi', 'Sensitif'];
+
+    const ROUTINE_BASE = {
+      Berminyak: {
+        morning: [
+          { category: 'Cleanser', tip: 'Gunakan facial wash yang mengandung salicylic acid atau tea tree' },
+          { category: 'Toner (Hydrating)', tip: 'Tone dengan toner hydrating tanpa alkohol' },
+          { category: 'Serum Niacinamide', tip: 'Niacinamide 4-10% untuk kontrol minyak' },
+          { category: 'Moisturizer (Gel)', tip: 'Pelembab gel-based, ringan dan bebas minyak' },
+          { category: 'SPF', tip: 'Tabir surya minimal SPF 30+, jangan skip!' },
+        ],
+        night: [
+          { category: 'Cleanser (Double Cleanse)', tip: 'Oil cleanser lalu facial wash' },
+          { category: 'Toner (Hydrating)', tip: 'Toner hydrating tanpa alkohol' },
+          { category: 'Serum Niacinamide', tip: 'Niacinamide 4-10% untuk kontrol minyak' },
+          { category: 'Moisturizer (Gel)', tip: 'Pelembab gel-based, ringan dan bebas minyak' },
+          { category: 'Eye Cream', tip: 'Krim mata untuk area under-eye' },
+        ],
+      },
+      Kering: {
+        morning: [
+          { category: 'Cleanser (Cream)', tip: 'Gunakan cream cleanser atau milk cleanser yang melembabkan' },
+          { category: 'Toner (Hydrating)', tip: 'Tone dengan toner yang kaya humektan' },
+          { category: 'Serum Hyaluronic Acid', tip: 'HA untuk mengikat kelembaban' },
+          { category: 'Moisturizer (Cream)', tip: 'Pelembab cream-based dengan ceramide' },
+          { category: 'SPF', tip: 'Tabir surya minimal SPF 30+, pilih yang melembabkan' },
+        ],
+        night: [
+          { category: 'Cleanser (Cream)', tip: 'Cream cleanser atau milk cleanser' },
+          { category: 'Toner (Hydrating)', tip: 'Toner kaya humektan' },
+          { category: 'Serum Hyaluronic Acid', tip: 'HA untuk mengikat kelembaban' },
+          { category: 'Moisturizer (Cream)', tip: 'Pelembab cream-based dengan ceramide' },
+          { category: 'Eye Cream', tip: 'Krim mata dengan formula yang melembabkan' },
+          { category: 'Retinol', tip: 'Gunakan retinol konsentrasi rendah 2-3x/minggu' },
+        ],
+      },
+      Kombinasi: {
+        morning: [
+          { category: 'Cleanser', tip: 'Facial wash gentle yang tidak membuat kulit kering' },
+          { category: 'Toner', tip: 'Toner hydrating yang ringan' },
+          { category: 'Serum Niacinamide', tip: 'Niacinamide untuk menyeimbangkan minyak' },
+          { category: 'Moisturizer (Lightweight)', tip: 'Pelembab ringan, gel atau lotion' },
+          { category: 'SPF', tip: 'Tabir surya minimal SPF 30+' },
+        ],
+        night: [
+          { category: 'Cleanser (Double Cleanse)', tip: 'Oil cleanser lalu gentle facial wash' },
+          { category: 'Toner', tip: 'Toner hydrating yang ringan' },
+          { category: 'Serum Niacinamide', tip: 'Niacinamide untuk menyeimbangkan minyak' },
+          { category: 'Moisturizer (Lightweight)', tip: 'Pelembab ringan, gel atau lotion' },
+          { category: 'Eye Cream', tip: 'Krim mata ringan' },
+          { category: 'Retinol', tip: 'Retinol konsentrasi rendah 2-3x/minggu' },
+        ],
+      },
+      Sensitif: {
+        morning: [
+          { category: 'Cleanser (Gentle)', tip: 'Facial wash yang sangat gentle, pH seimbang' },
+          { category: 'Toner (Alcohol-free)', tip: 'Toner tanpa alkohol dan fragrance' },
+          { category: 'Serum Centella', tip: 'Centella asiatica untuk menenangkan kulit' },
+          { category: 'Moisturizer (Fragrance-free)', tip: 'Pelembab tanpa pewangi, cocok untuk kulit sensitif' },
+          { category: 'SPF', tip: 'Tabir surya mineral/physical SPF 30+' },
+        ],
+        night: [
+          { category: 'Cleanser (Gentle)', tip: 'Facial wash gentle atau micellar water' },
+          { category: 'Toner (Alcohol-free)', tip: 'Toner tanpa alkohol dan fragrance' },
+          { category: 'Serum Centella', tip: 'Centella asiatica untuk menenangkan kulit' },
+          { category: 'Moisturizer (Fragrance-free)', tip: 'Pelembab tanpa pewangi' },
+          { category: 'Eye Cream', tip: 'Krim mata yang gentle, tanpa iritasi' },
+        ],
+      },
+    };
+
+    // ============================================================
+    //  STATE
+    // ============================================================
+
+    let profile = null;
+    let logs = [];
+    let selectedMood = 0;
+
+    // ============================================================
+    //  LOCAL STORAGE
+    // ============================================================
+
+    function loadData() {
+      try {
+        const p = localStorage.getItem('ptj_profile');
+        profile = p ? JSON.parse(p) : null;
+      } catch { profile = null; }
+
+      try {
+        const l = localStorage.getItem('ptj_logs');
+        logs = l ? JSON.parse(l) : [];
+      } catch { logs = []; }
+    }
+
+    function saveProfile(data) {
+      profile = data;
+      localStorage.setItem('ptj_profile', JSON.stringify(data));
+    }
+
+    function saveLogs() {
+      localStorage.setItem('ptj_logs', JSON.stringify(logs));
+    }
+
+    // ============================================================
+    //  ROUTINE GENERATOR
+    // ============================================================
+
+    function generateRoutine(skinType, concerns) {
+      const base = ROUTINE_BASE[skinType];
+      if (!base) return { morning: [], night: [] };
+
+      // Deep clone
+      const morning = base.morning.map(s => ({ ...s }));
+      const night = base.night.map(s => ({ ...s }));
+
+      // Concerns: Jerawat Aktif -> add Salicylic Acid
+      if (concerns.includes('Jerawat Aktif')) {
+        morning.splice(3, 0, { category: 'Salicylic Acid', tip: 'Gunakan 2-3x/minggu, jangan overlap dengan retinol di malam hari' });
+        night.splice(3, 0, { category: 'Salicylic Acid', tip: 'Gunakan 2-3x/minggu, jangan overlap dengan retinol' });
+      }
+
+      // Concerns: Bekas Jerawat -> add Vitamin C (morning only, before SPF)
+      if (concerns.includes('Bekas Jerawat')) {
+        // Insert before last step (SPF)
+        const spfIdx = morning.findIndex(s => s.category === 'SPF');
+        if (spfIdx !== -1) {
+          morning.splice(spfIdx, 0, { category: 'Vitamin C', tip: 'Vitamin C untuk mencerahkan bekas jerawat, gunakan di pagi hari' });
+        } else {
+          morning.push({ category: 'Vitamin C', tip: 'Vitamin C untuk mencerahkan bekas jerawat' });
+        }
+      }
+
+      // Sensitif: no Retinol (remove it)
+      if (skinType === 'Sensitif') {
+        const retinolIdxM = morning.findIndex(s => s.category === 'Retinol');
+        if (retinolIdxM !== -1) morning.splice(retinolIdxM, 1);
+        const retinolIdxN = night.findIndex(s => s.category === 'Retinol');
+        if (retinolIdxN !== -1) night.splice(retinolIdxN, 1);
+      }
+
+      return { morning, night };
+    }
+
+    // ============================================================
+    //  RENDER FUNCTIONS
+    // ============================================================
+
+    function renderProfile() {
+      const formView = document.getElementById('profile-form-view');
+      const summaryView = document.getElementById('profile-summary-view');
+
+      if (profile) {
+        formView.classList.add('hidden');
+        summaryView.classList.remove('hidden');
+        document.getElementById('summary-skin-type').textContent = `🧴 ${profile.skinType}`;
+        document.getElementById('summary-concerns').textContent =
+          profile.concerns.length > 0
+            ? 'Masalah: ' + profile.concerns.join(', ')
+            : 'Tidak ada masalah kulit yang dipilih';
+      } else {
+        formView.classList.remove('hidden');
+        summaryView.classList.add('hidden');
+      }
+    }
+
+    function renderRoutine() {
+      const noProfile = document.getElementById('routine-no-profile');
+      const content = document.getElementById('routine-content');
+
+      if (!profile) {
+        noProfile.classList.remove('hidden');
+        content.classList.add('hidden');
+        return;
+      }
+
+      noProfile.classList.add('hidden');
+      content.classList.remove('hidden');
+
+      const routine = generateRoutine(profile.skinType, profile.concerns);
+
+      const morningContainer = document.getElementById('morning-steps');
+      const nightContainer = document.getElementById('night-steps');
+
+      morningContainer.innerHTML = '';
+      nightContainer.innerHTML = '';
+
+      routine.morning.forEach((step, i) => {
+        morningContainer.appendChild(createStepCard(i + 1, step.category, step.tip));
+      });
+
+      routine.night.forEach((step, i) => {
+        nightContainer.appendChild(createStepCard(i + 1, step.category, step.tip));
+      });
+
+      // Show morning tab by default
+      document.querySelector('.tab-btn[data-tab="morning"]').classList.add('active');
+      document.querySelector('.tab-btn[data-tab="night"]').classList.remove('active');
+      morningContainer.style.display = 'block';
+      nightContainer.style.display = 'none';
+
+      // Greeting
+      document.getElementById('routine-greeting').textContent = 'Rutinitas untuk Kulit ' + profile.skinType;
+      document.getElementById('routine-subtext').textContent = 'Ikuti langkah-langkah ini secara teratur!';
+    }
+
+    function createStepCard(num, category, tip) {
+      const div = document.createElement('div');
+      div.className = 'step-card';
+      div.innerHTML = `
+        <div class="step-number">${num}</div>
+        <div class="step-info">
+          <div class="step-category">${category}</div>
+          <div class="step-tip">${tip}</div>
+        </div>
+      `;
+      return div;
+    }
+
+    function renderLogs() {
+      const list = document.getElementById('log-list');
+      const empty = document.getElementById('log-empty');
+
+      if (logs.length === 0) {
+        list.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+
+      empty.classList.add('hidden');
+
+      const EMOJIS = ['', '😣', '😕', '😐', '🙂', '😄'];
+      const recent = logs.slice(-30).reverse();
+
+      list.innerHTML = '<div class="card" style="padding:16px 20px;"><h3 style="margin-bottom:12px;">Riwayat Catatan</h3></div>';
+      const cardBody = list.querySelector('.card');
+
+      recent.forEach(log => {
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = `
+          <div class="log-emoji">${EMOJIS[log.mood] || '😐'}</div>
+          <div class="log-body">
+            <div class="log-date">${log.date}</div>
+            ${log.notes ? `<div class="log-notes">${escapeHtml(log.notes)}</div>` : '<div class="text-secondary text-small">Tidak ada catatan</div>'}
+          </div>
+        `;
+        cardBody.appendChild(entry);
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ============================================================
+    //  NAVIGATION
+    // ============================================================
+
+    function navigateTo(page) {
+      // Update pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById('page-' + page);
+      if (target) target.classList.add('active');
+
+      // Update nav
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      const navBtn = document.querySelector(`.nav-item[data-page="${page}"]`);
+      if (navBtn) navBtn.classList.add('active');
+
+      // Re-render if needed
+      if (page === 'profile') renderProfile();
+      if (page === 'routine') renderRoutine();
+      if (page === 'tracker') renderLogs();
+    }
+
+    // ============================================================
+    //  EVENT LISTENERS
+    // ============================================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+
+      // ---- NAVIGATION ----
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          navigateTo(btn.dataset.page);
+        });
+      });
+
+      // ---- SAVE PROFILE ----
+      document.getElementById('btn-save-profile').addEventListener('click', () => {
+        const selectedType = document.querySelector('input[name="skinType"]:checked');
+        if (!selectedType) {
+          alert('Silakan pilih tipe kulitmu!');
+          return;
+        }
+
+        const checkedConcerns = Array.from(
+          document.querySelectorAll('input[name="concern"]:checked')
+        ).map(cb => cb.value);
+
+        saveProfile({
+          skinType: selectedType.value,
+          concerns: checkedConcerns,
+        });
+
+        renderProfile();
+        renderRoutine();
+        navigateTo('routine');
+      });
+
+      // ---- EDIT PROFILE ----
+      document.getElementById('btn-edit-profile').addEventListener('click', () => {
+        // Pre-fill form
+        if (profile) {
+          const typeRadio = document.querySelector(`input[name="skinType"][value="${profile.skinType}"]`);
+          if (typeRadio) typeRadio.checked = true;
+
+          document.querySelectorAll('input[name="concern"]').forEach(cb => {
+            cb.checked = profile.concerns.includes(cb.value);
+          });
+        }
+
+        // Show form
+        document.getElementById('profile-form-view').classList.remove('hidden');
+        document.getElementById('profile-summary-view').classList.add('hidden');
+      });
+
+      // ---- GO TO PROFILE FROM ROUTINE ----
+      document.getElementById('btn-go-profile-from-routine').addEventListener('click', () => {
+        navigateTo('profile');
+      });
+
+      // ---- EMOJI SCALE ----
+      document.querySelectorAll('.emoji-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedMood = parseInt(btn.dataset.value);
+        });
+      });
+
+      // ---- SAVE LOG ----
+      document.getElementById('btn-save-log').addEventListener('click', () => {
+        if (selectedMood === 0) {
+          alert('Silakan pilih kondisi kulitmu hari ini!');
+          return;
+        }
+
+        const notes = document.getElementById('log-notes').value.trim();
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('id-ID', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
+
+        logs.push({
+          date: dateStr,
+          mood: selectedMood,
+          notes: notes,
+        });
+
+        // Keep only last 50 entries
+        if (logs.length > 50) {
+          logs = logs.slice(-50);
+        }
+
+        saveLogs();
+        renderLogs();
+
+        // Reset form
+        document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('log-notes').value = '';
+        selectedMood = 0;
+
+        // Scroll to log list
+        document.getElementById('log-list').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // ---- TAB TOGGLE (Morning/Night) ----
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          if (btn.dataset.tab === 'morning') {
+            document.getElementById('morning-steps').style.display = 'block';
+            document.getElementById('night-steps').style.display = 'none';
+          } else {
+            document.getElementById('morning-steps').style.display = 'none';
+            document.getElementById('night-steps').style.display = 'block';
+          }
+        });
+      });
+
+      // ---- INITIAL RENDER ----
+      if (profile) {
+        renderProfile();
+        renderRoutine();
+        renderLogs();
+        navigateTo('routine');
+      } else {
+        renderProfile();
+        renderLogs();
+        navigateTo('profile');
+      }
+    });
+  </script>
+</body>
+</html>
